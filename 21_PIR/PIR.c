@@ -9,14 +9,7 @@
 #include <wiringPi.h>
 #include <stdio.h>
 
-#define PIR_OUT 0
-
-int status = 1;
-
-void myISR(void)
-{
-	status = !status;	
-}
+#define PIR_OUT_PIN 0
 
 int main(void)
 {
@@ -25,20 +18,13 @@ int main(void)
 		return -1; 
 	}
 	
-	pinMode(PIR_OUT, INPUT);
-
-	pullUpDnControl(PIR_OUT, PUD_UP);
-	
-	if(wiringPiISR(ButtonPin, INT_EDGE_FALLING, myISR) < 0){
-		printf("ISR setup error!\n");
-		return -1;
-	}
+	pinMode(PIR_OUT_PIN, INPUT);
 
 	while(1){
-		if(status == 0){
-			printf("detected!\n");	
+		if(0 == digitalRead(PIR_OUT_PIN)){
+			printf("Movement not detected!\n");	
 		}else{
-			printf("No!\n");	
+			printf("Movement detected!\n");	
 		}
 	}
 
