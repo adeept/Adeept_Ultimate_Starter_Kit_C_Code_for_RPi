@@ -92,9 +92,8 @@ int main(void)
 	while(1){
 		pinMode(ADC_DIO, OUTPUT);
 		val = get_ADC_Result();
-		printf("Current analog val: %d\n", val);
-
 		vol = (5.0 / 255) * val;
+		printf("Current analog val: %03d  Voltage: %.2fV\n", val, vol);
 		lcdPosition(fd, 0, 1);
 		lcdPrintf(fd, "%s", "Voltage: ");
 		lcdPrintf(fd, "%.2fV", vol);
